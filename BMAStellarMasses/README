@@ -1,0 +1,17 @@
+The two post-processing routines that need to be run are
+addMinority.py and addRest,py,
+in that order I'm pretty sure.
+
+For both of them, the routine to run is "do all"
+as in addMinority.doall(dir) and addRest.doall(dir)
+where dir is the path to the files that make up the universe.
+You should take a look at those- they are simple loops
+over the universe models.
+
+Then to get the color -color plot,
+run loadPop.doall(dir) which returns a dictionary
+the code smass.py shows you how to use the dictionary
+of splines...
+or probably easier, take a look at 
+Check.py which loads the files directly but which is
+likely broken; the universe of files has changed, for example.
