@@ -13,12 +13,12 @@ for filename in /data/des50.a/data/annis/mof_cat_for_clusters/healpix/y1a1_gold_
     echo "$num" >> mof_healpix.lst
 done
 
-#pixels=('10890' '10891' '10892' '5937')
-#pixels=$( cat mof_healpix.lst )
-pixels=$( head mof_healpix.lst )
+#pixels=('10890')
+#pixels=$( head mof_healpix.lst )
+pixels=$( cat mof_healpix.lst )
 
 for pix in ${pixels[@]}; do
-    echo "python -c \"import local_afterburner_4; local_afterburner_4.nike(cluster_pix=$pix)\" ">src/afterburner_${pix}.sh
+    echo "python -c \"import afterburner; afterburner.nike(cluster_pix=$pix)\" ">src/afterburner_${pix}.sh
     chmod +x src/afterburner_${pix}.sh 
     csub -n 20 -o ${dir}/log/${pix}.log ./src/afterburner_${pix}.sh
 done
