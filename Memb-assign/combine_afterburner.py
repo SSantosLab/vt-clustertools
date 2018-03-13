@@ -98,7 +98,7 @@ def go():
         ripb = data['RIP_BLUE'][:]
         izpr = data['IZP_RED'][:]
         izpb = data['IZP_BLUE'][:]
-        gr0 = data['ZP']#GR0'][:]
+        gr0 = data['GR0'][:]
         hz = data['HOST_REDSHIFT'][:]
         hzerr = data['HOST_REDSHIFT_ERR'][:]
         mge = data['MAGERR_AUTO_G'][:]
