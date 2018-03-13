@@ -13,10 +13,9 @@ def compute_smass(a,mem_per_job):
     b = a + mem_per_job
     job = int(b/mem_per_job)
     indir = '/data/des60.b/data/palmese/lambda_star/fsps_v3.0_modified_Nov16/OUTPUTS/simha_miles_Nov2016/'
-    #members_infile = '/data/des40.a/data/jburgad/clusters/outputs_brian/lgt5_mof_members_full.fit'
-    members_infile = '/data/des40.a/data/mariaeli/lambda_star/clusters/output_test_membership/lgt5_mof_members_full.fit'
-    #smass_outfile = '/data/des40.a/data/jburgad/clusters/outputs_antonella/lgt5_mof/lgt5_mof_stellar_masses_%04d.fit' %(job)
-    smass_outfile = '/data/des40.a/data/mariaeli/lambda_star/clusters/output_test_stellarmass/lgt5_mof/lgt5_mof_stellar_masses_%04d.fit' %(job)
+    #indir = '/data/des60.b/data/palmese/lambda_star/fsps_v3.0_modified_Nov16/OUTPUTS/simha_miles_salpeter_Dec17/'
+    members_infile = '/data/des40.a/data/jburgad/clusters/outputs_brian/mar1_xray/xmm_members.fit'#feb15/lgt5_mof_members_full.fit'
+    smass_outfile = '/data/des40.a/data/jburgad/clusters/outputs_antonella/mar1_xray/xmm_stellar_masses_%04d.fit' %(job)#feb15/lgt5_mof_Nov2016_stellar_masses_%04d.fit' %(job)
     inputDataDict = helperfunctions.read_afterburner(members_infile,a,b)
     smass.calc(inputDataDict, outfile=smass_outfile, indir=indir, lib="miles")
     return
@@ -26,8 +25,9 @@ def compute_csmass():
     # Note: after running compute_smass and before running compute_csmass, it is necesary to use 
     # 'combine_cat.py' to combine all compute_smass output files for the input of compute_csmass.
     indir = '/data/des60.b/data/palmese/lambda_star/fsps_v3.0_modified_Nov16/OUTPUTS/simha_miles_Nov2016/'
-    smass_infile = '/data/des40.a/data/mariaeli/lambda_star/clusters/output_test_stellarmass/lgt5_mof/lgt5_mof_stellar_masses_full.fit'
-    clusters_outfile = '/data/des40.a/data/mariaeli/lambda_star/clusters/output_test_stellarmass/lgt5_mof/lgt5_mof_cluster_smass_full.fit'
+    #indir = '/data/des60.b/data/palmese/lambda_star/fsps_v3.0_modified_Nov16/OUTPUTS/simha_miles_salpeter_Dec17/'
+    smass_infile = '/data/des40.a/data/jburgad/clusters/outputs_antonella/mar1_xray/xmm_stellar_masses_full.fit'
+    clusters_outfile = '/data/des40.a/data/jburgad/clusters/outputs_antonella/mar1_xray/xmm_cluster_smass_full.fit'
     clusterSMass_orig.haloStellarMass(filename=smass_infile,outfile=clusters_outfile)
     return
 
@@ -46,10 +46,27 @@ def compute_csmass():
 
 '''
 
-def parallel_compute_smass(batch_start=0,max_of_batch=54788,njobs=100,ncores=20):
-    print "running..."
+def parallel_compute_smass(batch_start=0,max_of_batch=305782,njobs=100,ncores=20):
     alist = np.linspace(batch_start,max_of_batch,njobs,endpoint=False,dtype=int)
     Parallel(n_jobs=ncores)(delayed(compute_smass)(a,(max_of_batch-batch_start)/njobs) for a in alist)
     return
 
+#def parallel_compute_smass(batch_start=4579756,max_of_batch=9159512,njobs=100,ncores=20):
+#    alist = np.linspace(batch_start,max_of_batch,njobs,endpoint=False,dtype=int)
+#    Parallel(n_jobs=ncores)(delayed(compute_smass)(a,(max_of_batch-batch_start)/njobs) for a in alist)
+#    return
 
+#def parallel_compute_smass(batch_start=9159512,max_of_batch=13739268,njobs=100,ncores=20):
+#    alist = np.linspace(batch_start,max_of_batch,njobs,endpoint=False,dtype=int)
+#    Parallel(n_jobs=ncores)(delayed(compute_smass)(a,(max_of_batch-batch_start)/njobs) for a in alist)
+#    return
+
+#def parallel_compute_smass(batch_start=13739268,max_of_batch=18319024,njobs=100,ncores=20):
+#    alist = np.linspace(batch_start,max_of_batch,njobs,endpoint=False,dtype=int)
+#    Parallel(n_jobs=ncores)(delayed(compute_smass)(a,(max_of_batch-batch_start)/njobs) for a in alist)
+#    return
+
+#def parallel_compute_smass(batch_start=18319024,max_of_batch=22898780,njobs=100,ncores=20):
+#    alist = np.linspace(batch_start,max_of_batch,njobs,endpoint=False,dtype=int)
+#    Parallel(n_jobs=ncores)(delayed(compute_smass)(a,(max_of_batch-batch_start)/njobs) for a in alist)
+#    return

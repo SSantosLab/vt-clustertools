@@ -109,12 +109,8 @@ def haloStellarMass ( filename="vt-stellar-masses.txt", outfile="vt-halos-stella
         #zmedian = np.median(z[ix])
         #ramedian = np.median(ra[ix])
         #decmedian = np.median(dec[ix])
-
-        #ngals = id[ix].size
-        ngals = IZ_P_MEMBER[ix].sum()
-        #linear_mass = 10**mass[ix]
-        linear_mass = (10**mass[ix])*mass[ix]
-
+        ngals = id[ix].size
+        linear_mass = 10**mass[ix]
         linear_mass_weight_gr = 10**mass[ix]*GR_P_MEMBER[ix]
         linear_mass_weight_ri = 10**mass[ix]*RI_P_MEMBER[ix]
         linear_mass_weight_iz = 10**mass[ix]*IZ_P_MEMBER[ix]
@@ -124,7 +120,7 @@ def haloStellarMass ( filename="vt-stellar-masses.txt", outfile="vt-halos-stella
         mass_err_gr = np.log(10.)*linear_mass*std[ix]*GR_P_MEMBER[ix]
         mass_err_ri = np.log(10.)*linear_mass*std[ix]*RI_P_MEMBER[ix]
         mass_err_iz = np.log(10.)*linear_mass*std[ix]*IZ_P_MEMBER[ix]
-        mass_std_gr = 10**(-10)*np.sqrt((mass_err_gr**2).sum()) # From where these 10**(-10) factor comes from??
+        mass_std_gr = 10**(-10)*np.sqrt((mass_err_gr**2).sum())
         mass_std_ri = 10**(-10)*np.sqrt((mass_err_ri**2).sum())
         mass_std_iz = 10**(-10)*np.sqrt((mass_err_iz**2).sum())
 
@@ -201,7 +197,7 @@ def haloStellarMass ( filename="vt-stellar-masses.txt", outfile="vt-halos-stella
         ssfr_weight_iz_out.append(ssfr_weight_iz)
 
         if verbose: 
-            print "{:10d}  {:6.3f}   {:6.3f}   {:6.3f} {:6.4f} {:6.3f} {:6.4f} {:6.4f}".format(halo, ngals, sum_mass, sum_mass_std,lambda_iz,mass_std_iz,lambda_gr_err_jk,ssfr_weight_iz)
+            print "{:10d}  {:4d}   {:6.3f}   {:6.3f} {:6.4f} {:6.3f} {:6.4f} {:6.4f}".format(halo, ngals, sum_mass, sum_mass_std,lambda_iz,mass_std_iz,lambda_gr_err_jk,ssfr_weight_iz)
         #Very latest
         #fd.write("{:10d}  {:4d} {:6.3f} {:6.3f} {:6.4f} {:6.3f} {:6.3f} {:6.3f}  {:6.3f} {:6.3f} {:6.3f} {:6.3f}  {:6.3f} {:6.3f} {:6.4f} {:6.3f} {:6.3f} {:6.3f} {:6.3f} {:6.3f}\n".format(halo, ngals, zout, sum_mass, sum_mass_std, lambda_gr,lambda_gr_err_jk, lambda_ri, lambda_ri_err_jk,lambda_iz,lambda_iz_err_jk, lambda_gr_red, lambda_ri_red, lambda_iz_red,lambda_iz_red_err_jk, lambda_gr_blue, lambda_ri_blue, lambda_iz_blue,lambda_iz_blue_err_jk,ssfr_weight_iz))
         #LATEST:

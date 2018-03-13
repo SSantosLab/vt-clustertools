@@ -14,7 +14,7 @@ def doall ( dir = "simha/", lib="basel") :
     if lib == "miles" : metallicites = metallicites_miles
     start_list = [1.0,3.0,5.0,7.0]#,9.0,11.0] 
     trunc_list = [5, 7, 9, 11, 13] 
-    tau_list = [0.3, 0.7, 1.0, 1.3, 2.0, 9.0] 
+    tau_list = [0.3, 0.7, 1.0, 1.3, 2.0]#, 9.0] 
     theta_list = [-1.00,-1.73,-5.66]
     #metallicites = [20, ]
     #start_list = [1.0, ] 
