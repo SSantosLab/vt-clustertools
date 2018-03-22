@@ -1,6 +1,6 @@
 RA=RA
 DEC=DEC
-Z=REDSHIFT
+Z=MEDIAN_Z
 ID=ID
 rcl=0.95
 buff=1.0

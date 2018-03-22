@@ -50,10 +50,10 @@ def nike(a=-1,b=-1,cluster_pix=-1,nside=32) :
         color_indir='/data/des30.a/data/bwelch/redmapper_y1a1/'
         #zdir='/data/des30.a/data/bwelch/millenium_sims/'
         zdir='/data/des30.a/data/bwelch/redmapper_y1a1/'
-        clusterfile=cluster_indir+'y1a1_gold_1.0.3-d10-mof-001d_run_redmapper_v6.4.17-vlim_lgt5_desformat_catalog.fit'
-        #clusterfile='/data/des41.b/data/hlin/vt_redmapper/mock_clusters/mockcluster_900_1004.fits'
-        galfile=gal_indir+'y1a1_gold_bpz_mof_fullarea_CUT_allcolumns.fits'#'y1a1_gold_bpz_mof_subsample_RA3446_DEC5647_CUT_allcolumns.fits'
-        #galfile='/data/des41.b/data/hlin/vt_redmapper/mock_clusters/y1a1_gold_bpz_mof_fullarea_CUT_allcolumns_cutarea_mockcluster_900_1004.fits'
+        #clusterfile=cluster_indir+'y1a1_gold_1.0.3-d10-mof-001d_run_redmapper_v6.4.17-vlim_lgt5_desformat_catalog.fit'
+        clusterfile='/home/s1/jburgad/d40/vt-clustertools/vt/example/test_objects_1cluster.clustercat.fit'#cluster_indir+'test_1cluster.fits'
+        #galfile=gal_indir+'y1a1_gold_bpz_mof_fullarea_CUT_allcolumns.fits'#'y1a1_gold_bpz_mof_subsample_RA3446_DEC5647_CUT_allcolumns.fits'
+        galfile=gal_indir+'test_objects_1cluster.fits'
         colorfile=color_indir+'red_galaxy_El1_COSMOS_DES_filters.txt'
         #zfile=zdir+'1pz.txt'
         zfile=zdir+'bpz_median_z_sigma.txt'
@@ -62,22 +62,24 @@ def nike(a=-1,b=-1,cluster_pix=-1,nside=32) :
     #outputs
         if cluster_pix >= 0:
             outdir='/data/des40.a/data/jburgad/clusters/outputs_brian/feb15/'#jan21_lgt5_mof/'
-            bghistfile=outdir+'newpr_normedbg1.5_bghists.fit'
-            cluster_outfile=outdir+'lgt5_mof_bin01_clusters_%s.fit' %cluster_pix
-            member_outfile=outdir+'lgt5_mof_bin01_members_%s.fit' %cluster_pix
+            bghistfile=outdir+'newpr_normedbg1.5_bghists.fits'
+            cluster_outfile=outdir+'lgt5_mof_bin01_clusters_%s.fits' %cluster_pix
+            member_outfile=outdir+'lgt5_mof_bin01_members_%s.fits' %cluster_pix
         else:
             outdir='/data/des40.a/data/jburgad/clusters/outputs_brian/test/'
-            bghistfile=outdir+'newpr_normedbg1.5_bghists.fit'
-            cluster_outfile=outdir+'test_clusters.fit'#'lgt5_mof_clusters_mocks_900_1004.fit'
-            member_outfile=outdir+'test_members.fit'#'lgt5_mof_members_mocks_900_1004.fit'
+            bghistfile=outdir+'newpr_normedbg1.5_bghists.fits'
+            cluster_outfile=outdir+'test_c_1cluster.fits'#'lgt5_mof_clusters_mocks_900_1004.fit'
+            member_outfile=outdir+'test_m_1cluster.fits'#'lgt5_mof_members_mocks_900_1004.fit'
         print 'Output Directory:',outdir
 
     #read in data
         print 'Getting Data'
         c = pyfits.open(clusterfile)
         c = c[1].data
-        rac=c['ra'][:]
-        decc=c['dec'][:]
+        #rac=c['ra'][:]
+        #decc=c['dec'][:]
+        rac=c['ra_c'][:]
+        decc=c['dec_c'][:]
 
 
         if cluster_pix >= 0:
@@ -125,10 +127,14 @@ def nike(a=-1,b=-1,cluster_pix=-1,nside=32) :
             g = pyfits.open(galfile)
             g = g[1].data
 
+        #ix=rac>180; rac[ix]=rac[ix]-360
+        #z=c['z_lambda'][:]
+        #ngals=c['LAMBDA_CHISQ'][:]
+        #cid=c['mem_match_id'][:]
         ix=rac>180; rac[ix]=rac[ix]-360
-        z=c['z_lambda'][:]
-        ngals=c['LAMBDA_CHISQ'][:]
-        cid=c['mem_match_id'][:]
+        z=c['z'][:]
+        ngals=c['nvt'][:]
+        cid=c['id'][:]
 
         rag1=g['RA'][:]
         ix=rag1>180; rag1[ix]=rag1[ix]-360
@@ -177,9 +183,12 @@ def nike(a=-1,b=-1,cluster_pix=-1,nside=32) :
             w, = np.where((z>zmin) & (z<zmax) & (rac>=ra1) & (rac<=ra2) & (decc>=dec1) & (decc<=dec2) & (ngals!=0))
 
         c1=c[w]
-        rac=c1['ra'][:]
+        #rac=c1['ra'][:]
+        #ix=rac>180; rac[ix]=rac[ix]-360 #JCB
+        #decc=c1['dec'][:]
+        rac=c1['ra_c'][:]
         ix=rac>180; rac[ix]=rac[ix]-360 #JCB
-        decc=c1['dec'][:]
+        decc=c1['dec_c'][:]
 
         zmin=0.05
         zmax=1.1
@@ -209,15 +218,23 @@ def nike(a=-1,b=-1,cluster_pix=-1,nside=32) :
         print 'total clusters: ',len(c1)
         print 'total galaxies: ',len(g1)
 
-        rac=c1['ra'][:]
+        #cid=c1['MEM_MATCH_ID'][:]
+        #rac=c1['ra'][:]
+        #ix=rac>180; rac[ix]=rac[ix]-360
+        #decc=c1['dec'][:]
+        #z=c1['z_lambda'][:]
+        #zcl_err=c1['z_lambda_e'][:]
+        #NGALS=c1['LAMBDA_CHISQ'][:]
+        #lambda_r=c1['R_LAMBDA'][:]
+        #maskfrac=c1['MASKFRAC'][:]
+        cid=c1['id'][:]
+        rac=c1['ra_c'][:]
         ix=rac>180; rac[ix]=rac[ix]-360
-        decc=c1['dec'][:]
-        z=c1['z_lambda'][:]
-        zcl_err=c1['z_lambda_e'][:]
-        NGALS=c1['LAMBDA_CHISQ'][:]
-        lambda_r=c1['R_LAMBDA'][:]
-        maskfrac=c1['MASKFRAC'][:]
-        cid=c1['MEM_MATCH_ID'][:]
+        decc=c1['dec_c'][:]
+        z=c1['z'][:]
+        zcl_err=c1['z_rms'][:]
+        NGALS=c1['nvt'][:]
+
         rag=g1['RA'][:]
         ix=rag1>180; rag1[ix]=rag1[ix]-360
         decg=g1['DEC'][:]
@@ -1009,7 +1026,7 @@ def nike(a=-1,b=-1,cluster_pix=-1,nside=32) :
     for i in range(np.array(cluster_ID).size):
         ix,=np.where(hostid2==cluster_ID[i])
         zclust[ix]=z[i]
-        zclust_err[ix]=zcl_err[i] #JCBB
+        zclust_err[ix]=zcl_err[i] #JCB
     
     
     ######WRITING OUTPUT FILES######
@@ -1597,8 +1614,6 @@ def sigma(R,R200,c=3):
         arctan_coeff=2./(np.sqrt(np.abs(r**2-1)))
         arctan_arg=np.sqrt(np.abs((r-1)/(r+1)))
         sigma=np.where(r>1,pre*(1-arctan_coeff*np.arctan(arctan_arg)),pre*(1-arctan_coeff*np.arctanh(arctan_arg)))
-        print 'r: ', r
-        print 'sigma: ', sigma
         return sigma*2*Rs #2Rs for new p(r)
     else:
         bogusval=-99.*np.ones_like(R)
