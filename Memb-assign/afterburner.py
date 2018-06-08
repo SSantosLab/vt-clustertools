@@ -1,6 +1,6 @@
 ##################LOCAL BACKGROUND SUBTRACTION##################
 import numpy as np
-import pyfits
+#import pyfits
 from fitsio import FITS
 import fitsio
 import matplotlib.pyplot as plt
@@ -17,6 +17,7 @@ from scipy.interpolate import interp1d
 from scipy.special import erf
 from collections import Counter
 from astropy.table import Table
+from astropy.io import fits as pyfits
 import os
 #import line_profiler
 
@@ -51,7 +52,8 @@ def nike(a=-1,b=-1,cluster_pix=-1,nside=32) :
         #zdir='/data/des30.a/data/bwelch/millenium_sims/'
         zdir='/data/des30.a/data/bwelch/redmapper_y1a1/'
         #clusterfile=cluster_indir+'y1a1_gold_1.0.3-d10-mof-001d_run_redmapper_v6.4.17-vlim_lgt5_desformat_catalog.fit'
-        clusterfile='/home/s1/jburgad/d40/vt-clustertools/vt/example/test_objects_1cluster.clustercat.fit'#cluster_indir+'test_1cluster.fits'
+        #clusterfile=cluster_indir+'test_1cluster.fits'#'/home/s1/jburgad/d40/vt-clustertools/vt/example/test_objects_1cluster.clustercat.fit'
+        clusterfile='/home/s1/jburgad/d40/vt-clustertools/vt/example/test_objects_1cluster.clustercat.fit'
         #galfile=gal_indir+'y1a1_gold_bpz_mof_fullarea_CUT_allcolumns.fits'#'y1a1_gold_bpz_mof_subsample_RA3446_DEC5647_CUT_allcolumns.fits'
         galfile=gal_indir+'test_objects_1cluster.fits'
         colorfile=color_indir+'red_galaxy_El1_COSMOS_DES_filters.txt'
@@ -1087,7 +1089,7 @@ def nike(a=-1,b=-1,cluster_pix=-1,nside=32) :
     #cols=pyfits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,col11,col12,col13,col14,col15,col16,col17,col18,col19,col20,col21,col22,col23,col24,col25,col26,col27,col28,col29,col30,col31,col32,col33,col34,col35,col36,col37,col38,col39,col40])
     cols=pyfits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,col11,col12,col13,col14,col15,col16,col19,col20,col21,col22,col23,col24,col25,col27,col28,col36,col37,col38,col39,col40,col41])
     tbhdu=pyfits.BinTableHDU.from_columns(cols)
-    tbhdu.writeto(member_outfile,clobber=True)
+    tbhdu.writeto(member_outfile,overwrite=True)
     
     print 'writing cluster file'
     
@@ -1189,7 +1191,7 @@ def nike(a=-1,b=-1,cluster_pix=-1,nside=32) :
     #cols=pyfits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,col11,col12,col13,col14,col15,col16,col17,col18,col19,col20,col21,col22,col23,col24,col25,col26,col27,col31,col32,col33,col34,col35,col36,col37,col38,col42]) #JCBB
     #cols=pyfits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,col11,col12,col13,col14,col15,col16,col17,col18,col19,col20,col21,col22,col23,col24,col25,col26,col27,col28,col29,col30,col31,col32,col33,col34,col35,col36,col37,col38,col39,col40,col41,col42,col43,col44,col45,col46,col47,col48,col49,col50,col51,col52,col53,col54,col55,col56,col57])
     tbhdu=pyfits.BinTableHDU.from_columns(cols)
-    tbhdu.writeto(cluster_outfile,clobber=True)
+    tbhdu.writeto(cluster_outfile,overwrite=True)
     
     print 'success!! and there was great rejoicing!'
 
@@ -1363,7 +1365,7 @@ def nike_rf() :
     
     cols=pyfits.ColDefs([col1,col2,col30,col31,col33,col34,col35])
     tbhdu=pyfits.BinTableHDU.from_columns(cols)
-    tbhdu.writeto(member_outfile,clobber=True)
+    tbhdu.writeto(member_outfile,overwrite=True)
     
     print 'writing cluster file'
     
@@ -1387,7 +1389,7 @@ def nike_rf() :
     
     cols=pyfits.ColDefs([col1,col4,col45,col46,col47,col48,col50,col51,col53,col54])
     tbhdu=pyfits.BinTableHDU.from_columns(cols)
-    tbhdu.writeto(cluster_outfile,clobber=True)
+    tbhdu.writeto(cluster_outfile,overwrite=True)
     
     print 'success!! and there was great rejoicing!'
 
@@ -1920,7 +1922,7 @@ def gmmfit(color,band2,interp,background_histograms,r_cl,maxcol,cluster_ID,clust
         zcl=cluster_Z[np.where(cluster_ID==x)]
         rcl=r_cl[np.where(cluster_ID==x)]
         expred=interp(zcl)#expcol[ind]
-        if background_histograms==None:
+        if background_histograms.any()==None: #JCB added .any() w/o throws error from astropy fits
             bg_hist=np.zeros_like(hist_bins)
             bg_hist=bg_hist[:-1]
             bg_hist=np.array([bg_hist])
