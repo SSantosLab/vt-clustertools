@@ -83,7 +83,6 @@ def nike(a=-1,b=-1,cluster_pix=-1,nside=32) :
         rac=c['ra_c'][:]
         decc=c['dec_c'][:]
 
-
         if cluster_pix >= 0:
 
             '''if cluster_pix == 0:
@@ -134,8 +133,8 @@ def nike(a=-1,b=-1,cluster_pix=-1,nside=32) :
         #ngals=c['LAMBDA_CHISQ'][:]
         #cid=c['mem_match_id'][:]
         ix=rac>180; rac[ix]=rac[ix]-360
-        z=c['z'][:]
         ngals=c['nvt'][:]
+        z=c['z'][:]
         cid=c['id'][:]
 
         rag1=g['RA'][:]
@@ -182,7 +181,8 @@ def nike(a=-1,b=-1,cluster_pix=-1,nside=32) :
             if w.size <= 0:
                 raise Exception('Error: pixel contains no clusters')
         else:
-            w, = np.where((z>zmin) & (z<zmax) & (rac>=ra1) & (rac<=ra2) & (decc>=dec1) & (decc<=dec2) & (ngals!=0))
+            #w, = np.where((z>zmin) & (z<zmax) & (rac>=ra1) & (rac<=ra2) & (decc>=dec1) & (decc<=dec2) & (ngals!=0))
+            w, = np.where((z>zmin) & (z<zmax) & (rac>=ra1) & (rac<=ra2) & (decc>=dec1) & (decc<=dec2) & (ngals>=10)) # cut on >9 members per MSS
 
         c1=c[w]
         #rac=c1['ra'][:]

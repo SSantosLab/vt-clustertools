@@ -1,6 +1,6 @@
 import numpy as np
-import pyfits as pf
-from astropy.io import fits
+#import pyfits as pf
+from astropy.io import fits as pf
 import fitsio
 
 def jackknife(x, func):

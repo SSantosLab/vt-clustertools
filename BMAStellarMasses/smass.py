@@ -2,7 +2,8 @@ import numpy as np
 import loadPopColors
 import helperfunctions
 #import weightedstats as ws
-import pyfits as pf
+#import pyfits as pf
+from astropy.io import fits as pf
 
 #
 # inputDataDict is what holds the input photometry

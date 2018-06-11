@@ -14,8 +14,8 @@ def compute_smass(a,mem_per_job):
     job = int(b/mem_per_job)
     indir = '/data/des60.b/data/palmese/lambda_star/fsps_v3.0_modified_Nov16/OUTPUTS/simha_miles_Nov2016/'
     #indir = '/data/des60.b/data/palmese/lambda_star/fsps_v3.0_modified_Nov16/OUTPUTS/simha_miles_salpeter_Dec17/'
-    members_infile = '/data/des40.a/data/jburgad/clusters/outputs_brian/mar1_xray/xmm_members.fit'#feb15/lgt5_mof_members_full.fit'
-    smass_outfile = '/data/des40.a/data/jburgad/clusters/outputs_antonella/mar1_xray/xmm_stellar_masses_%04d.fit' %(job)#feb15/lgt5_mof_Nov2016_stellar_masses_%04d.fit' %(job)
+    members_infile = '/data/des40.a/data/jburgad/clusters/outputs_brian/test/test_m_1cluster.fits'#feb15/lgt5_mof_members_full.fit'
+    smass_outfile = '/data/des40.a/data/jburgad/clusters/outputs_antonella/test/test_1cluster_stellar_masses_%05d.fits' %(job)#feb15/lgt5_mof_Nov2016_stellar_masses_%04d.fit' %(job)
     inputDataDict = helperfunctions.read_afterburner(members_infile,a,b)
     smass.calc(inputDataDict, outfile=smass_outfile, indir=indir, lib="miles")
     return
@@ -26,8 +26,8 @@ def compute_csmass():
     # 'combine_cat.py' to combine all compute_smass output files for the input of compute_csmass.
     indir = '/data/des60.b/data/palmese/lambda_star/fsps_v3.0_modified_Nov16/OUTPUTS/simha_miles_Nov2016/'
     #indir = '/data/des60.b/data/palmese/lambda_star/fsps_v3.0_modified_Nov16/OUTPUTS/simha_miles_salpeter_Dec17/'
-    smass_infile = '/data/des40.a/data/jburgad/clusters/outputs_antonella/mar1_xray/xmm_stellar_masses_full.fit'
-    clusters_outfile = '/data/des40.a/data/jburgad/clusters/outputs_antonella/mar1_xray/xmm_cluster_smass_full.fit'
+    smass_infile = '/data/des40.a/data/jburgad/clusters/outputs_antonella/test/test_1cluster_stellar_masses_full.fits'
+    clusters_outfile = '/data/des40.a/data/jburgad/clusters/outputs_antonella/test/test_1cluster_cluster_smass_full.fits'
     clusterSMass_orig.haloStellarMass(filename=smass_infile,outfile=clusters_outfile)
     return
 
@@ -46,7 +46,7 @@ def compute_csmass():
 
 '''
 
-def parallel_compute_smass(batch_start=0,max_of_batch=305782,njobs=100,ncores=20):
+def parallel_compute_smass(batch_start=0,max_of_batch=550,njobs=10,ncores=20): # njobs is normally = 100
     alist = np.linspace(batch_start,max_of_batch,njobs,endpoint=False,dtype=int)
     Parallel(n_jobs=ncores)(delayed(compute_smass)(a,(max_of_batch-batch_start)/njobs) for a in alist)
     return
