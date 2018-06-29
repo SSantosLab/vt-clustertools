@@ -1,3 +1,4 @@
+
 # coding: utf-8
 
 # In[1]:
@@ -282,12 +283,12 @@ dec = numpy.array(full_data['DEC']) # array with dec values
 
 # In[ ]:
 
-
-decmin = -51 # ra and dec limits if necessary, this is just an example
-decmax = -48
-ramin = 13
-ramax = 16
-mask = ((dec< decmax) & (dec> decmin) & (ra > ramin ) & (ra< ramax)) # ra and dec restrictions into mask
+# the commented code below is only needed when you want to restrict
+#decmin = -51 # ra and dec limits if necessary, this is just an example
+#decmax = -48
+#ramin = 13
+#ramax = 16
+#mask = ((dec< decmax) & (dec> decmin) & (ra > ramin ) & (ra< ramax)) # ra and dec restrictions into mask
 data = full_data[mask] #new galaxy sample with mask applied
 z= numpy.array(data['Z'])
 ra = numpy.array (data['RA'])
@@ -358,7 +359,7 @@ for i in range(5):
         ax[i,j].yaxis.set_major_formatter(plt.FormatStrFormatter('%.02f'))
 fig.tight_layout()
 fig.savefig('des40a/output_files/redshift_grid.png')
-fig.close()
+plt.close(fig)
 
 
 # In[33]:
@@ -375,7 +376,7 @@ for i in range(5):
         ax[4,j].set_xlabel('bin', fontsize= 14)
         ax[i,0].set_ylabel('bin', fontsize = 14)
 fig.savefig('des40a/output_files/correlation_matrices.png')
-fig.close()
+plt.close(fig)
 
 
 # In[34]:
@@ -401,7 +402,7 @@ ax2.set_xlabel('Redshift bin')
 ax2.set_ylabel('A')
 #plt.show()
 fig.savefig('des40a/output_files/paramters_graphs.png')
-fig.close()
+plt.close(fig)
 
 # In[36]:
 
@@ -416,4 +417,6 @@ for i in range (0,25):
             z_max[i], A_value[i], A_err[i], g_value[i], g_err[i]))
     output.write(A)
 output.close()
+
+
 
