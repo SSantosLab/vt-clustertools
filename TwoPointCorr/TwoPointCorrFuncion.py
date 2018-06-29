@@ -30,12 +30,12 @@ import healpy as hp
 
 
 def get_z(data):# set redshift ranges for each of the 25 bins so each bin has the same amount of galaxies
-    sorted_data = sorted(data, key= lambda redshift:redshift['Z'])
+    sorted_data = sorted(data, key= lambda redshift:redshift['REDSHIFT'])
     z_min = []
     z_max = []
     for i in range (0,25):
-        zmin = sorted_data[i*(len(data)/25-1)]['Z']
-        zmax = sorted_data[(i+1)*(len(data)/25-1)]['Z']
+        zmin = sorted_data[i*(len(data)/25-1)]['REDSHIFT']
+        zmax = sorted_data[(i+1)*(len(data)/25-1)]['REDSHIFT']
         z_min.append(zmin)
         z_max.append(zmax)
     return (z_min, z_max)
@@ -273,9 +273,9 @@ def tree2(galaxy_catalog, rand_catalog, zd):
 # In[ ]:
 
 
-galaxy_sample = 'des40a/example/new_example.1_truth.20.fits' # fits file with galaxy sample
+galaxy_sample = 'des40a/example/example_data.fit' # fits file with galaxy sample
 full_data = Table.read(galaxy_sample) #Table displaying ra,dec,redshift,etc.
-z= numpy.array(full_data['Z']) # array with redshift values for each galaxy
+z= numpy.array(full_data['REDSHIFT']) # array with redshift values for each galaxy
                                #beware different tables call this column differently
 ra = numpy.array (full_data['RA']) # array with ra values
 dec = numpy.array(full_data['DEC']) # array with dec values
@@ -290,10 +290,10 @@ dec = numpy.array(full_data['DEC']) # array with dec values
 #ramax = 16
 #mask = ((dec< decmax) & (dec> decmin) & (ra > ramin ) & (ra< ramax)) # ra and dec restrictions into mask
 data = full_data[mask] #new galaxy sample with mask applied
-z= numpy.array(data['Z'])
+z= numpy.array(data['REDSHIFT'])
 ra = numpy.array (data['RA'])
 dec = numpy.array(data['DEC'])
-new_file = 'des40a/output_files/cut.fits'
+new_file = 'des40a/output_files/fits_files/cut.fits'
 data.write(new_file) #writes out fits file with new masked galaxy sample
 # create galaxy catalog
 galaxy_catalog = treecorr.Catalog(new_file, ra_col='RA', dec_col='DEC', ra_units='deg', dec_units='deg')
