@@ -1,0 +1,20 @@
+# The file path with the data to be correlated:
+file_name: des40a/example/example_data.fit
+
+# What are the names of the columns for ra, dec,z and what kind of values do they have:
+ra_col: RA          # The column name for RA values in the input file
+dec_col: DEC        # The column name for Dec values in the input file
+z_col : REDSHIFT    # The column name for Z values in the input file
+# Are there any specific limitations on ra or dec, if so, which ones
+ra_lim : False
+dec_lim : False
+#if the above are false, the quantites below will have no effect
+dec_min: -51 
+dec_max : -48
+ra_min : 13
+ra_max : 16
+# Do you wish to save the output graphs showing: grid portraying two point correlation values and power law, values of A and 
+# gamma, and correlation matrix for two point correlation values
+get_graphs: True
+
+
