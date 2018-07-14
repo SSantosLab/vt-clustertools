@@ -1,0 +1,3 @@
+All the fits files written in the TwoPointCorrFunction.py code go here. Each redshift bin has its respective fits file.
+The fits file data_cut.fits is a cut version of the original data with the users RA or DEC limitations if specified in the
+config file.
