@@ -1,0 +1,4 @@
+This directory contains two folders. The example folder contains the example data fits file and its config file.
+The config file contains information about the files path and other important specifications the user must provide.
+The output_files directory contains the files created by the TwoPointCorrFunction.py code and further details can be found
+inside the folder.
