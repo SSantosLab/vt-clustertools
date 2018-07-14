@@ -1,0 +1,6 @@
+This is where the output files from the two point correlation function code go. 
+The fits_files folder containsthe fits files made for each redshift bin. 
+The plots folder contains three plots: 
+corrfunction_grid contains the two point correlation function plot for each redshift binand its respective power law,
+paramters_graph is a plot of theparamters A and gamma for each redshift bin with its associated errors, 
+correlation_matrices shows the correlation matrix (for the two point correlation function values)for each redhsift bin.
