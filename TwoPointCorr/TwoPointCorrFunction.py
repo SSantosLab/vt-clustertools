@@ -439,9 +439,9 @@ output = open ('des40a/output_files/output.info', 'w')
 columnTitleRow = " ra_min     ra_max      dec_min    dec_max    zmin       zmax       A                        gamma\n"
 output.write(columnTitleRow )
 for i in range (0,25):
-    A = ('%.7f  %.7f  %.7f  %.7f  %.7f  %.7f  %.7f +/- %.7f  %.7f +/- %.7f\n' 
+    out = ('%.7f  %.7f  %.7f  %.7f  %.7f  %.7f  %.7f +/- %.7f  %.7f +/- %.7f\n' 
          % (ramin, ramax, decmin, decmax, z_min[i], 
             z_max[i], A_value[i], A_err[i], g_value[i], g_err[i]))
-    output.write(A)
+    output.write(out)
 output.close()
 
