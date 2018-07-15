@@ -1,3 +1,6 @@
 This is where the output files from the TwoPointCorrFunction.py go.
 The output.info file is the table containing the information about the paramters A and gamma for each redshift bin.
-Each folder has its own README file explaining its contents.
+The plots are the following:
+1)corrfunction_grid contains the two point correlation function plot for each redshift binand its respective power law,
+2)paramters_graph is a plot of theparamters A and gamma for each redshift bin with its associated errors, 
+3)correlation_matrices shows the correlation matrix (for the two point correlation function values)for each redhsift bin.
