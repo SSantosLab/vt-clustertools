@@ -15,7 +15,6 @@ import pprint
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib import ticker
-get_ipython().magic(u'matplotlib inline')
 from scipy import stats
 from astropy.table import Table
 from astropy import units as u
