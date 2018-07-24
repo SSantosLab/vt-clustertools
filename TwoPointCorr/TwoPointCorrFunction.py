@@ -372,7 +372,7 @@ A_value, A_err, g_value, g_err, fit_eq = params(r_value, xi_value, xi_logerr) # 
 
 
 if (GET_GRAPHS == True):
-    fig, ax = plt.subplots(5, 5,figsize = (20,20)) #log-log scale of autocorrelation function fo each z bin
+    fig, ax = plt.subplots(5, 5,figsize = (20,20)) # autocorrelation function fo each z bin in a 5 by 5 grid
     rep = []
     for i in range(5):
         rep.append (5*i)
