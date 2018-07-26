@@ -16,5 +16,12 @@ ra_max : 16
 # Do you wish to save the output graphs showing: grid portraying two point correlation values and power law, values of A and 
 # gamma, and correlation matrix for two point correlation values
 get_graphs: True
+# Apply a magnitude cut if needed, specify the name of the column and the values for the cut
+mag_cut: False
+mag_col: mag_i_lsst
+mag_min: 0
+mag_max: 24
+#name of the directory where you want the files to go, this includes the table and the plots if get_graphs is True
+outputdir: des40a/output_files
 
 
