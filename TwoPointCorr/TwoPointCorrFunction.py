@@ -478,12 +478,15 @@ if (GET_GRAPHS == True):
 
 
 #write out file
-output = open (OUTPUTDIR+'/output.info', 'w')
-columnTitleRow = " ra_min     ra_max      dec_min    dec_max    zmin       zmax       A                        gamma\n"
-output.write(columnTitleRow )
+output = open (OUTPUTDIR+'/ex50_output.info', 'w')
+columnTitleRow = "# boxID   ra_min     ra_max     dec_min    dec_max    zmin       zmax       A                        gamma\n"
+output.write(columnTitleRow)
+box = 0
 for i in range (0,25):
-    out = ('%.7f  %.7f  %.7f  %.7f  %.7f  %.7f  %.7f +/- %.7f  %.7f +/- %.7f\n' 
-         % (ramin, ramax, decmin, decmax, z_min[i], 
+    box=box+1
+    boxID = 120000000 + box*10000
+    out = ('%.0f %.7f  %.7f  %.7f  %.7f  %.7f  %.7f  %.7f +/- %.7f  %.7f +/- %.7f\n' 
+         % (boxID, ramin, ramax, decmin, decmax, z_min[i], 
             z_max[i], A_value[i], A_err[i], g_value[i], g_err[i]))
     output.write(out)
 output.close()
