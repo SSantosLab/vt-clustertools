@@ -1,0 +1,44 @@
+Overview
+This code has the main function of calculating Two Point Correlation functions and two quantities associated with the 
+correlation function: Gamma and A. In order to calculate two point correlation functions, I use TreeCorr (software developed
+by Jarvis). 
+
+Redshift Bins
+The Galaxy Catalog is divded into 25 different redshift bins, each with approximately the same amount of galaxies. This is done
+in order to calculate two point correlation functions for redshift ranges, instead of the entire galaxy catalog, which wouldn't
+be very useful. 
+
+Random Catalog
+In order to use TreeCorr and calculate two point correlation functions, a random galaxy catalog is needed to
+complement the 'real' galaxy catalog. The random catalog is made by creating a healpy pixel map of the galaxy catalog, mostly 
+to determine the shape of the catalog in coordinate space (RA and DEC), and then uniformly distrubuting random points in this
+space.
+
+Two Point Correlation
+Once the catalog has been divded into 25 redshift bins, each one has its own random catalog created and their respective two
+point correlation functions are calculated using TreeCorr. TreeCorr has a couple of parameters, such as the amount of bins
+it will divide the catalog in (these are spacial bins, not redshift bins), as well as the min and max seperation between
+galaxies, which were chosen to be 0.3 and 2.5 Mpc respectively. This quantities where chosen based on the approximate size
+of a galaxy cluster, as well as the effect of the 2-halo term affecting the two point correlation at larger distance (approx
+2.5 Mpc according to Maria). However, this spacial sepration needs to be converted to angular separation for TreeCorr, which
+is done for each redshift bin accordingly (because spacial distance and angular distance conversion changes with redshift).
+Once this is done, the program will then calculate the two point correlation function using TreeCorr, and addidtionally, the
+error on each measurment using the jacknifing technique on every redshift bin. This techique is compromised of dividing the
+catalog into n (where for this code n =9) equal parts, removing a piece of the catalog and calculating the two point correlation
+for this new catalog. This allows us to get the average value and construct a covariance matrix, where the diagonal elements
+are the errors of each measrument.
+
+Linear Fit of Two Point Correlation
+Once the Two Point correlation is calculated, theoretically, a plot of the correlation function in a log-log scale should be
+linear, where the slope of line is linearly related to gamma, and The y-intercept is related to A. In order best fit 
+the data to a linear fit, I used equations obtained from Numerical Recipes by Press(2002) page 781  to do so. These
+equations make it very easy to fit the data and obtain the paramters.
+
+Output Data
+The output produced by this code is both a linear and log-log scale plots of the two point correlation function for all 
+redshift bins, as well as the covariance and correlation functions. Addidtionally, the parameters A and gamma are plotted
+vs redshift bin. Finally, an output file is written containing information about redshfit, ra, dec, and the desried parameters
+A dn gamma for each bin.
+
+
+
