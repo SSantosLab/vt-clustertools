@@ -62,7 +62,7 @@ def get_theta (z_max):#set the theta min and theta max for each redshift to a ph
 def ang2pix (dec_rad, ra_rad): # function that transforms ra and dec into theta and phi to create healpy pixels
     theta = (90 - (dec_rad *180/numpy.pi))*numpy.pi/180
     phi = ra_rad
-    nside = int(math.pow(2, 10)) # this number was chosen because the pixels are small enough to accurate shape
+    nside = int(math.pow(2, 8)) # this number was chosen because the pixels are small enough to accurate shape
                                  # the catalog, but big enough not to loose galaxies
     pix = hp.ang2pix(nside, theta, phi)
     return pix
@@ -393,6 +393,7 @@ if (GET_GRAPHS == True):
             ax[i, j].plot(r_value[rep[i] + j], fit_eq[rep[i] + j], color = 'red', lw = 2)
             ax[i,j].scatter(r_value[rep[i] + j], xi_value[rep[i] + j], color='blue', s = 15)
             ax[i,j].errorbar(r_value[rep[i] + j], xi_value[rep[i] + j], yerr = (xi_err[rep[i] + j]), color='black', lw=1, ls='')              
+            ax[i,j].set_title('Redshfit Range: %.3f - %.3f' %(z_min[rep[i] + j],  z_max[rep[i] + j]))
             ax[4,j].set_xlabel(r'$\theta$ (degrees)', fontsize= 14)
             ax[i,0].set_ylabel(r'$\omega$ ($\theta$)', fontsize = 14)
             ax[i,j].xaxis.set_major_locator(plt.LinearLocator(5))
@@ -416,6 +417,7 @@ if (GET_GRAPHS == True):
             ax[i, j].plot(r_value[rep[i] + j], fit_eq[rep[i] + j], color = 'red', lw = 2)
             ax[i,j].scatter(r_value[rep[i] + j], xi_value[rep[i] + j], color='blue', s = 15)
             ax[i,j].errorbar(r_value[rep[i] + j], xi_value[rep[i] + j], yerr = (xi_err[rep[i] + j]), color='black', lw=1, ls='')              
+            ax[i,j].set_title('Redshfit Range: %.3f - %.3f' %(z_min[rep[i] + j],  z_max[rep[i] + j]))
             ax[4,j].set_xlabel(r'$\theta$ (degrees)', fontsize= 14)
             ax[i,0].set_ylabel(r'$\omega$ ($\theta$)', fontsize = 14)
             minx = numpy.min(r_value[rep[i] + j])
@@ -449,13 +451,14 @@ if (GET_GRAPHS == True):
             fig.colorbar(cax , ax=ax[i, j])
             ax[4,j].set_xlabel('bin', fontsize= 14)
             ax[i,0].set_ylabel('bin', fontsize = 14)
+            ax[i,j].set_title('Redshfit Range: %.2f - %.2f' %(z_min[rep[i] + j],  z_max[rep[i] + j]))
     fig.savefig(OUTPUTDIR+'/correlation_matrices.png')
     plt.close(fig)
 
 
 # In[28]:
 
-
+# plot of values of gamma and A with respect to the different redshift bins
 if (GET_GRAPHS == True):     
     sim = []
     for d in range (0,25):
@@ -478,16 +481,16 @@ if (GET_GRAPHS == True):
 
 
 #write out file
-output = open (OUTPUTDIR+'/ex50_output.info', 'w')
-columnTitleRow = "# boxID   ra_min     ra_max     dec_min    dec_max    zmin       zmax       A                        gamma\n"
+output = open (OUTPUTDIR+'/output.info', 'w')
+columnTitleRow = "# boxID   ra_min     ra_max     dec_min    dec_max    zmin       zmax       A          gamma\n"
 output.write(columnTitleRow)
 box = 0
 for i in range (0,25):
     box=box+1
     boxID = 120000000 + box*10000
-    out = ('%.0f %.7f  %.7f  %.7f  %.7f  %.7f  %.7f  %.7f +/- %.7f  %.7f +/- %.7f\n' 
+    out = ('%.0f %.7f  %.7f  %.7f  %.7f  %.7f  %.7f  %.7f  %.7f\n' 
          % (boxID, ramin, ramax, decmin, decmax, z_min[i], 
-            z_max[i], A_value[i], A_err[i], g_value[i], g_err[i]))
+            z_max[i], A_value[i], g_value[i]))
     output.write(out)
 output.close()
 
