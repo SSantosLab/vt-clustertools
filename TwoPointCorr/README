@@ -1,3 +1,9 @@
+Download entire TwoPointCorr folder to run code.
+Command:
+python TwoPointCorrFunction.py
+
+Congif.yaml file is located in example folder inside des40a.
+
 Overview
 This code has the main function of calculating Two Point Correlation functions and two quantities associated with the 
 correlation function: Gamma and A. In order to calculate two point correlation functions, I use TreeCorr (software developed
